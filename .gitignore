@@ -2,16 +2,16 @@ __pycache__/*
 images/*
 *.pyc
 *.pth
-# *.npy
+*.npy
 saved_model/*
-# logs/*
-# *.log
+logs/*
+*.log
 metrics/*
 *.info
 *.jpg
 *.png
 *.h5
-# *.pkl
+*.pkl
 reference_projects/
 *.dng
 *.ARW
