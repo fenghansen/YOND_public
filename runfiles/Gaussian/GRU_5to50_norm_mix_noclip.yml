@@ -1,0 +1,64 @@
+mode: 'train'
+checkpoint: 'saved_model/Gaussian'
+fast_ckpt: 'checkpoints/Gaussian'
+model_name: 'Gaussian_GRU_mix_5to50_norm_noclip'
+result_dir: 'images/'
+num_gpu: 4
+num_workers: 12
+brightness_correct: True
+
+dst: &base_dst
+  root_dir: 'YOND'
+  dataset: 'RGB_Img2Raw_Dataset' 
+  command: 'cache, no_bayeraug'
+  subname: 'mix'
+  patch_size: 256
+  H: 256
+  W: 256
+  sigma_min: 5
+  sigma_max: 50
+  lock_wb: False
+  clip: False
+  gpu_preprocess: False
+dst_train:
+  <<: *base_dst
+  mode: 'train'
+  dataset: 'RGB_Img2Raw_Dataset' 
+  dstname: 'DIV2K+SID'
+dst_eval:
+  <<: *base_dst
+  mode: 'eval'
+  dataset: 'RGB_Img2Raw_Dataset' 
+  dstname: 'DIV2K'
+  sigma_list: [10, 25, 50]
+dst_test:
+  <<: *base_dst
+  mode: 'test'
+  dataset: 'RGB_Img2Raw_Dataset' 
+  dstname: 'DIV2K'
+  sigma_list: [10, 25, 50]
+
+arch:
+  name: 'GuidedResUnet'
+  guided: True
+  in_nc: 4
+  out_nc: 4
+  nf: 32
+  nframes: 1
+  res: True
+  norm: True
+
+hyper:
+  lr_scheduler: 'WarmupCosine'
+  learning_rate: 1.e-4
+  batch_size: 64
+  last_epoch: 600 
+  step_size: 5
+  stop_epoch : 1000
+  T: 2
+  coldstart: True
+  num_workers: 8
+  num_gpus: 2
+  save_freq: 10
+  plot_freq: 25
+  best_psnr: 0.

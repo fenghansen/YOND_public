@@ -1,0 +1,18 @@
+__pycache__/*
+images/*
+*.pyc
+*.pth
+# *.npy
+saved_model/*
+# logs/*
+# *.log
+metrics/*
+*.info
+*.jpg
+*.png
+*.h5
+# *.pkl
+reference_projects/
+*.dng
+*.ARW
+*.mat
