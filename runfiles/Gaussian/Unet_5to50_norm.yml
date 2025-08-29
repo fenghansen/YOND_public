@@ -1,0 +1,66 @@
+mode: 'train'
+checkpoint: 'saved_model/Gaussian'
+fast_ckpt: 'checkpoints/Gaussian'
+model_name: 'Gaussian_Unet_5to50_norm'
+result_dir: 'images/'
+num_gpu: 1
+num_workers: 8
+brightness_correct: True
+
+dst: &base_dst
+  root_dir: 'DIV2K'
+  dataset: 'DIV2K_Img2Raw_Dataset' 
+  command: 'cache'
+  patch_size: 256
+  H: 256
+  W: 256
+  sigma_min: 5
+  sigma_max: 50
+  lock_wb: False
+  clip: True
+  gpu_preprocess: False
+dst_train:
+  <<: *base_dst
+  mode: 'train'
+  dataset: 'DIV2K_Img2Raw_Dataset' 
+  dstname: 'DIV2K'
+dst_eval:
+  <<: *base_dst
+  mode: 'eval'
+  dataset: 'DIV2K_Img2Raw_Dataset' 
+  dstname: 'DIV2K'
+  sigma_list: [10, 25, 50]
+dst_test:
+  <<: *base_dst
+  mode: 'test'
+  dataset: 'DIV2K_Img2Raw_Dataset' 
+  dstname: 'DIV2K'
+  sigma_list: [10, 25, 50]
+
+arch:
+  name: 'UNetSeeInDark'
+  in_nc: 4
+  out_nc: 4
+  nf: 32
+  nframes: 1
+  use_dpsv: False
+  res: True
+  norm: True
+  cascade: False
+  add: False
+  lock_wb: False
+
+hyper:
+  lr_scheduler: 'WarmupCosine'
+  learning_rate: 2.e-4
+  batch_size: 64
+  last_epoch: 0
+  step_size: 10
+  stop_epoch : 300
+  T: 3
+  coldstart: True
+  num_workers: 4
+  num_gpus: 1
+  save_freq: 10
+  plot_freq: 50
+  best_psnr: 0.

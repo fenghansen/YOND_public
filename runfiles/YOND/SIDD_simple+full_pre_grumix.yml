@@ -1,0 +1,49 @@
+mode: 'train'
+checkpoint: 'saved_model/Gaussian'
+fast_ckpt: 'checkpoints/Gaussian'
+model_name: 'Gaussian_GRU_mix_5to50_norm'
+method_name: 'YOND_SIDD_simple+full_pre_grumix_iter'
+result_dir: 'images/'
+num_gpu: 1
+num_workers: 2
+
+pipeline:
+  data_type: "SIDD"  # ["SIDD", "DND"]
+  full_est: True
+  est_type: 'simple+full' # ["simple", "Foi", "Liu", "PGE", "Ours"]
+  k: 29
+  full_dn: False
+  vst_type: 'exact' # ["exact", "asym", "nnVST", "Ours"] (Ours中还有前处理pre和后处理post)
+  bias_corr: 'pre' # pre为前处理, post为后处理
+  denoiser_type: 'gru32n' # ["BM3D", "FBI", "DMID"]
+  iter: 'iter' # ["iter", "once"]
+  max_iter: 1 
+  clip: False
+
+dst: &base_dst
+  root_dir: 'SIDD'
+  dataset: 'SIDD_Dataset' 
+  dstname: SIDD
+  command: ''
+  patch_size: 256
+  H: 256
+  W: 256
+  lock_wb: False
+  clip: True
+  gpu_preprocess: False
+dst_eval:
+  <<: *base_dst
+  mode: 'eval'
+dst_test:
+  <<: *base_dst
+  mode: 'test'
+
+arch:
+  name: 'GuidedResUnet'
+  guided: True
+  in_nc: 4
+  out_nc: 4
+  nf: 32
+  nframes: 1
+  res: True
+  norm: True

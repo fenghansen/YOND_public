@@ -1,0 +1,53 @@
+mode: 'train'
+checkpoint: 'saved_model/Gaussian'
+fast_ckpt: 'checkpoints/Gaussian'
+model_name: 'Gaussian_GRU_mix_5to50_noclip'
+method_name: 'YOND_ANY_simple+full_pre_grumix'
+result_dir: 'images/'
+num_gpu: 1
+num_workers: 2
+
+pipeline:
+  data_type: "LRID"  # ["SIDD", "DND"]
+  full_est: True
+  est_type: 'simple+full' # ["simple", "Foi", "Liu", "PGE", "Ours"]
+  full_dn: True
+  vst_type: 'exact' # ["exact", "asym", "nnVST", "Ours"] (Ours中还有前处理pre和后处理post)
+  bias_corr: 'pre' # pre为前处理, post为后处理
+  denoiser_type: 'unetn' # ["BM3D", "FBI", "DMID"]
+  iter: 'iter' # ["iter", "once"]
+  max_iter: 1
+  clip: False
+
+dst: &base_dst
+  root_dir: 'LRID'
+  dataset: 'LRID_Dataset' 
+  mode: 'eval'
+  dstname: ['indoor_x5', 'indoor_x3', 'outdoor_x3']
+  command: ''
+  H: 3472
+  W: 4624
+  wp: 1023
+  bl: 63
+  clip: False
+  gpu_preprocess: False
+dst_eval:
+  <<: *base_dst
+  ratio_list: [1,2]
+  dstname: ['indoor_x5']
+  mode: 'eval'
+dst_test:
+  <<: *base_dst
+  ratio_list: [1,2]
+  dstname: ['outdoor_x3']
+  mode: 'test'
+
+arch:
+  name: 'GuidedResUnet'
+  guided: True
+  in_nc: 4
+  out_nc: 4
+  nf: 32
+  nframes: 1
+  res: True
+  norm: True
