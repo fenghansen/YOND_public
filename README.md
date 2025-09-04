@@ -1,10 +1,21 @@
 # You Only Need a Denoiser  
-The official implementation of *"YOND: Practical Blind Raw Image Denoising Free from Camera-Specific Data Dependency"*  
+[![arXiv](https://img.shields.io/badge/arXiv-2506.03645-b31b1b.svg)](https://arxiv.org/abs/2506.03645)
+[![Hugging Face Spaces](https://img.shields.io/badge/%F0%9F%A4%97%20Hugging%20Face-Spaces-orange)](https://huggingface.co/spaces/hansen97/YOND)
+[![中文简介](https://img.shields.io/badge/中文简介-VMCL-0078d4)](https://vmcl-isp.site/t/topic/201)
+
+The official implementation of *"[YOND: Practical Blind Raw Image Denoising Free from Camera-Specific Data Dependency](https://arxiv.org/abs/2506.03645)"*  
 ## Notes  
-1. The full version of this project will be released soon after potential conflicts are resolved. The training code has not been fully tested after cleanup and may contain minor bugs.  
-2. Complete experimental results (visualized as RGB images) are available at [Baidu Netdisk](https://pan.baidu.com/s/1nox4vMXwhpsIHG6qri5SIg?pwd=vmcl#list/path=%2F). This includes YOND's inference results on four public datasets (`results`) and crops used for comparison in the manuscript (`crops@paper`).  
-3. Please download the datasets to the same directory and update the `host` in the `get_host_with_dir()` function in ```utils/utils.py```.  
-4. We plan to release a more user-friendly version in the future to enable denoising of arbitrary raw images. Stay tuned (possibly in February).  
+1. **Code Availability**  
+   - YOND's core modules (CNE & EM-VST) have been **temporarily obfuscated with PyArmor** to comply with recent laboratory confidentiality regulations.  
+   - You can still **run inference**, but the source code will remain encrypted **until the paper is officially accepted**.  
+
+2. **Try YOND Online – No Installation Needed**
+   - Upload your own noisy raw images and let YOND denoise them with our Hugging Face Spaces demo, powered by the ZeroGPU grant.  
+   - 👉 **Demo & Inference:** [huggingface.co/spaces/hansen97/YOND](https://huggingface.co/spaces/hansen97/YOND)  
+
+4. Complete experimental results (visualized as RGB images) are available at [Baidu Netdisk](https://pan.baidu.com/s/1nox4vMXwhpsIHG6qri5SIg?pwd=vmcl#list/path=%2F ). This includes YOND's inference results on four public datasets (`results`) and crops used for comparison in the manuscript (`crops@paper`).  
+
+5. Please download the datasets to the same directory and update the `host` in the `get_host_with_dir()` function in ```utils/utils.py```.  
   
 ## Training  
 We have provided the pre-trained SNR-Net weights (`checkpoints`) and training data (`datasets/YOND`) at [Baidu Netdisk](https://pan.baidu.com/s/1nox4vMXwhpsIHG6qri5SIg?pwd=vmcl#list/path=%2F).  
@@ -41,8 +52,18 @@ python YOND_DND.py -f runfiles/YOND/DND_simple+full_pre_grumix.yml -m evaltest
 python YOND_ELD.py -f runfiles/YOND/ELD_simple+full_pre_grumix.yml -m eval  
 # LRID (Cleaning up...)  
 python YOND_LRID.py -f runfiles/YOND/LRID_simple+full_pre_grumix.yml -m evaltest
-```  
-  
-## Evaluation on Your Raw Images (To Be Continued)  
-Please refer to `YOND_any.py` for modification (Cleaning up...).
+```
 
+## 🏷️ Citation
+If you find our code helpful in your research or work please cite our paper.
+```bibtex
+@article{feng2025yond,
+  title={YOND: Practical Blind Raw Image Denoising Free from Camera-Specific Data Dependency},
+  author={Feng, Hansen and Wang, Lizhi and Huang, Yiqi and Li, Tong and Zhu, Lin and Huang, Hua},
+  journal={arXiv preprint arXiv:2506.03645},
+  year={2025}
+}
+```
+
+## 📧 Contact
+If you would like to get in-depth help from me, please feel free to contact me (hansen97@outlook.com / fenghansen@bit.edu.cn) with a brief self-introduction (including your name, affiliation, and position).
