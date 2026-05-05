@@ -13,12 +13,12 @@ The official implementation of *"[YOND: Practical Blind Raw Image Denoising Free
    - Upload your own noisy raw images and let YOND denoise them with our Hugging Face Spaces demo, powered by the ZeroGPU grant.  
    - 👉 **Demo & Inference:** [huggingface.co/spaces/hansen97/YOND](https://huggingface.co/spaces/hansen97/YOND)  
 
-4. Complete experimental results (visualized as RGB images) are available at [Baidu Netdisk](https://pan.baidu.com/s/1nox4vMXwhpsIHG6qri5SIg?pwd=vmcl#list/path=%2F ). This includes YOND's inference results on four public datasets (`results`) and crops used for comparison in the manuscript (`crops@paper`).  
+4. Complete experimental results (visualized as RGB images) are available at [Baidu Netdisk](https://pan.baidu.com/s/1tAJW_57v2jWJ605MWKMKVg?pwd=nn4v). This includes YOND's inference results on four public datasets (`results`) and crops used for comparison in the manuscript (`crops@paper`).  
 
 5. Please download the datasets to the same directory and update the `host` in the `get_host_with_dir()` function in ```utils/utils.py```.  
   
 ## Training  
-We have provided the pre-trained SNR-Net weights (`checkpoints`) and training data (`datasets/YOND`) at [Baidu Netdisk](https://pan.baidu.com/s/1nox4vMXwhpsIHG6qri5SIg?pwd=vmcl#list/path=%2F).  
+We have provided the pre-trained SNR-Net weights (`checkpoints`) and training data (`datasets/YOND`) at [Baidu Netdisk](https://pan.baidu.com/s/1tAJW_57v2jWJ605MWKMKVg?pwd=nn4v).  
 Our training data consists of crops from the ground truth of [DIV2K dataset](https://data.vision.ee.ethz.ch/cvl/DIV2K/) and [SID Sony dataset](https://cchen156.github.io/SID.html). For SID dataset, 16-bit images were generated using *rawpy*. We have made the cropped version (datasets) available to help you align with our experiments.  
 RGB images will be unprocessed into pseudo-raw images with random Bayer patterns for training the AWGN Raw Denoiser.  
   
